@@ -8,5 +8,7 @@ This repository will host redistributed copies of third-party speech models.
 Their licence notices live here, alongside the files they cover, and are
 reproduced in the application itself.
 
+See [NOTICE.md](NOTICE.md) for third-party model licences and attribution.
+
 Speech recognition uses **NVIDIA Parakeet TDT 0.6b v3**, licensed
 **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**.
