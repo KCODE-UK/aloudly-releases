@@ -24,10 +24,19 @@ Automatic speech recognition — English and 24 other European languages.
   — an int8-quantised ONNX conversion for sherpa-onnx, by Fangjun Kuang.
 - **Modifications:** the files Aloudly downloads are quantised and converted to
   ONNX by the conversion above; they are not NVIDIA's original checkpoint.
+  Since Aloudly 0.5.2 the encoder is additionally **re-serialised into ONNX
+  external-data form** (`encoder.int8.onnx` holding the graph and
+  `encoder.int8.onnx.data` holding the weights) so the runtime can map the
+  weights instead of copying them. The graph and weights are otherwise
+  unchanged. Those two files are hosted as release assets in
+  https://github.com/KCODE-UK/aloudly-models (tag
+  `parakeet-tdt-0.6b-v3-int8-ext-v1`); the decoder, joiner and token files
+  still come from the conversion above.
 
 CC BY 4.0 requires that redistribution carry attribution to NVIDIA, a link to
 the licence, the notices above, and an indication that the material was
-modified. This file is that indication.
+modified. This file is that indication, for both the int8 ONNX conversion and
+the external-data re-serialisation.
 
 ## OpenAI Whisper (small)
 
@@ -96,12 +105,49 @@ person. Also used for the optional local voice print.
 > above is taken from NVIDIA's terms for the TitaNet family rather than from
 > the conversion itself.
 
+## Meta Llama 3.2 (1B Instruct)
+
+Text summarisation — the default "fast" tier of the Summarize button in
+History. Not used for speech recognition or for the pasted transcript.
+
+- **Publisher:** Meta Platforms, Inc.
+- **Upstream:** https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct
+- **Licence:** [Llama 3.2 Community License](https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE).
+  Llama 3.2 is licensed under the Llama 3.2 Community License, Copyright ©
+  Meta Platforms, Inc. All Rights Reserved.
+- **Commercial use:** permitted under that licence. It requires that a product
+  using the model display **"Built with Llama"**, which Aloudly does in
+  Settings ▸ Updates ▸ Credits, and that this notice be retained.
+- **Obtained from:** https://huggingface.co/onnx-community/Llama-3.2-1B-Instruct
+  — an ONNX conversion (4-bit quantised) for Transformers.js.
+- **Modifications:** quantisation and ONNX conversion by the conversion above.
+  Downloaded on first use into the browser-style cache of the app's own
+  storage, not into the visible models folder.
+
+## Qwen2.5 (1.5B Instruct)
+
+Text summarisation — the optional "quality" tier of Summarize.
+
+- **Publisher:** Alibaba Cloud (Qwen team)
+- **Upstream:** https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct
+- **Licence:** Apache License 2.0.
+- **Commercial use:** permitted, on the same terms as the other Apache-2.0
+  models above.
+- **Obtained from:** https://huggingface.co/onnx-community/Qwen2.5-1.5B-Instruct
+  — an ONNX conversion (q4f16) for Transformers.js.
+- **Modifications:** quantisation and ONNX conversion by the conversion above.
+
 ---
 
 ## Speech engine
 
-Model inference uses [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) by
-the k2-fsa project, licensed under the Apache License 2.0.
+Speech model inference uses [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx)
+by the k2-fsa project, licensed under the Apache License 2.0.
+
+The summarisation models run through
+[Transformers.js](https://github.com/huggingface/transformers.js) by Hugging
+Face (Apache License 2.0) on
+[ONNX Runtime](https://github.com/microsoft/onnxruntime) by Microsoft (MIT).
 
 ## Redistribution
 
